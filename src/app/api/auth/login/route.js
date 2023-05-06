@@ -1,39 +1,42 @@
+import { connectDB, disconnectDB, client } from "../../../../../DB/main";
+import * as bcrypt from "bcrypt";
+import { signJwtAccessToken } from "../../../../../lib/jwt";
 
-import { connectDB,disconnectDB,client } from "../../../../../DB/main"
-import * as bcrypt from "bcrypt"
+export async function POST(request) {
+  await connectDB;
+  const body = await request.json();
+  const db = client.db("online_bookstore");
+  const userCollection = db.collection("users");
 
-export async function POST(request){
-    await connectDB
-    const body = await request.json()
-    const db = client.db("online_bookstore")
-    const userCollection =  db.collection("users")
-    
-    const {email,password} = body
+  const { email, password } = body;
 
-    const user = await userCollection.find({
-        email:email
-    }).toArray()
+  const user = await userCollection
+    .find({
+      email: email,
+    })
+    .toArray();
 
+  if (user.length != 0 && (await bcrypt.compare(password, user[0].password))) {
+    const { password, ...userWithoutPass } = user;
 
-    if( user.length != 0 && (await bcrypt.compare(password,user[0].password))){
-        const 
-            {password,...userWithoutPass} = user
+    console.log(userWithoutPass[0]);
 
-            console.log("userwithoutpass:" ,    userWithoutPass[0])
-            return new Response(JSON.stringify(userWithoutPass[0]))
-        
-    }else{
-        return new Response(JSON.stringify("User with that credentials does not exists."))
-    }
+    const accesToken = signJwtAccessToken(userWithoutPass[0]);
 
+    const result = {
+      ...userWithoutPass,
+      accesToken,
+    };
 
+    console.log("result:", result);
+    const { 0: userWithoutJwt } = result;
+    const userWithJwt = { ...userWithoutJwt, accesToken };
+    return new Response(JSON.stringify(userWithJwt));
+  } else {
+    return new Response(
+      JSON.stringify("User with that credentials does not exists.")
+    );
+  }
 
-
-
-
-
-
-    await disconnectDB
-
-
+  await disconnectDB;
 }

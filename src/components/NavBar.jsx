@@ -1,6 +1,9 @@
 import React from "react";
 import Link from "next/link";
 //styling
+
+//components
+import SignInButton from "./SignInButton";
 import styles from "../components/Navbar.module.css";
 const NavBar = () => {
   return (
@@ -10,6 +13,7 @@ const NavBar = () => {
         <Link href="/profile">Profile</Link>
       </div>
       <div className={styles["nav-desni-cosak"]}>
+        <SignInButton />
         <Link href="/signup">Signup/Signin</Link>
       </div>
     </div>
