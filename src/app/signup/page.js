@@ -8,6 +8,9 @@ import { useState,useRef } from "react";
 import logo from "../../images/logo.png";
 import "./signup.css";
 
+//lib
+import signupFunction from "../../../lib/signupFunction";
+
 const Signup = () => {
   // resavanje slajdera levo-desno
   const [formWrapper1Classes, setFormWrapper1Classes] = useState(
@@ -31,16 +34,33 @@ const Signup = () => {
   const loginEmailRef = useRef()
   const loginPasswordRef = useRef()
 
-  const  loginAuthHandler = async () => {
-   const result = await signIn("credentials",{ 
-    username: loginEmailRef.current.value ,
-    password: loginPasswordRef.current.value,
-    redirect:true,
-    callbackUrl:"/",
 
-    
-   })
+  //register refovi
+  const registerEmailRef = useRef()
+  const registerPasswordRef = useRef()
+  const registerNameRef = useRef()
+  const registerSurnameRef = useRef()
+  const registerAdressRef = useRef()
+  const registerPhoneRef = useRef()
+
+  //register logika
+  const signupActionHandler = () => {
+
+  signupFunction({
+    email:registerEmailRef.current.value,
+    password:registerPasswordRef.current.value,
+    name:registerNameRef.current.value,
+    surname:registerSurnameRef.current.value,
+    adress:registerAdressRef.current.value,
+    phone:registerPhoneRef.current.value
+  })
+
   }
+
+
+
+
+  
 
   return (
     <div className="wrapper">
@@ -70,7 +90,7 @@ const Signup = () => {
                   <input ref={loginPasswordRef} id="login-password" type="password" required />
                 </div>
               </fieldset>
-              <button onClick={loginAuthHandler} type="submit" class="btn-login">
+              <button  type="submit" class="btn-login">
                 Login
               </button>
             </form>
@@ -93,37 +113,37 @@ const Signup = () => {
                 <div>
                   <div class="input-block">
                     <label for="signup-password-confirm">Name</label>
-                    <input id="signup-password-confirm" type="text" required />
+                    <input ref={registerNameRef} id="signup-password-confirm" type="text" required />
                   </div>
 
                   <div class="input-block">
                     <label for="signup-email">E-mail</label>
-                    <input id="signup-email" type="email" required />
+                    <input ref={registerEmailRef} id="signup-email" type="email" required />
                   </div>
                   <div class="input-block">
                     <label for="adress">Adress</label>
-                    <input id="adress" type="text" required />
+                    <input ref={registerAdressRef} id="adress" type="text" required />
                   </div>
                 </div>
 
                 <div>
                   <div class="input-block">
                     <label for="surname">Surname</label>
-                    <input id="surname" type="text" required />
+                    <input ref={registerSurnameRef} id="surname" type="text" required />
                   </div>
                   <div class="input-block">
                     <label for="signup-password">Password</label>
-                    <input id="signup-password" type="password" required />
+                    <input ref={registerPasswordRef} id="signup-password" type="password" required />
                   </div>
 
                   <div class="input-block">
                     <label for="mobile">Phone</label>
-                    <input id="mobile" type="number" required />
+                    <input ref={registerPhoneRef} id="mobile" type="number" required />
                   </div>
                 </div>
               </fieldset>
-              <button  type="submit" class="btn-signup">
-                Continue
+              <button onClick={signupActionHandler}  type="submit" class="btn-signup">
+                signup
               </button>
             </form>
           </div>
