@@ -1,0 +1,8 @@
+.auth-btn{
+    text-decoration: none;
+    color: white;
+}
+
+.auth-btn:hover{
+cursor: pointer;
+}

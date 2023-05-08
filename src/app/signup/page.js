@@ -34,6 +34,16 @@ const Signup = () => {
   const loginEmailRef = useRef()
   const loginPasswordRef = useRef()
 
+  const loginUserHandler = async (e) => {
+    e.preventDefault()
+    const result = await signIn("credentials",{
+      email:loginEmailRef.current.value,
+      password:loginPasswordRef.current.value,
+      redirect:true,
+      callbackUrl:"/"
+    })
+  }
+
 
   //register refovi
   const registerEmailRef = useRef()
@@ -90,7 +100,7 @@ const Signup = () => {
                   <input ref={loginPasswordRef} id="login-password" type="password" required />
                 </div>
               </fieldset>
-              <button  type="submit" class="btn-login">
+              <button onClick={loginUserHandler} type="submit" class="btn-login">
                 Login
               </button>
             </form>

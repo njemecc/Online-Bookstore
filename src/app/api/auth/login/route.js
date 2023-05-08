@@ -8,13 +8,14 @@ export async function POST(request) {
   const db = client.db("online_bookstore");
   const userCollection = db.collection("users");
 
-  const { email, password } = body;
+  let { email, password } = body;
 
   const user = await userCollection
     .find({
       email: email,
     })
     .toArray();
+
 
   if (user.length != 0 && (await bcrypt.compare(password, user[0].password))) {
     const { password, ...userWithoutPass } = user;
@@ -31,12 +32,13 @@ export async function POST(request) {
     console.log("result:", result);
     const { 0: userWithoutJwt } = result;
     const userWithJwt = { ...userWithoutJwt, accesToken };
+
     return new Response(JSON.stringify(userWithJwt));
   } else {
     return new Response(
-      JSON.stringify("User with that credentials does not exists.")
+      JSON.stringify(null)
     );
   }
 
-  await disconnectDB;
+
 }

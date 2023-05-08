@@ -4,7 +4,7 @@ import "./globals.css";
 //session
 import { SessionProvider } from "next-auth/react";
 import Providers from "@/components/Providers";
-import NavBar from "@/components/navBar";
+import NavBar from "@/components/NavBar";
 
 export const metadata = {
   title: "Create Next App",

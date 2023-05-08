@@ -2,10 +2,14 @@
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
+//styling
+import styles from "../components/SignInButton.module.css"
+
 const SignInButton = () => {
 const {data:session} = useSession()
 
-console.log("session je",session)
+console.log("session jecl",session)
+console.log("user jee",session?.user)
 
 
  if(session && session.user)
@@ -13,12 +17,12 @@ console.log("session je",session)
     return (
         <div>
             <p>{session.user.name}</p>
-            <button onClick={() => signOut}>Sign out</button>
+            <a  className={styles["auth-btn"]} onClick={() => signOut()}>Sign out</a>
         </div>
     )
 }
 
-return   <button onClick={() => signIn()}>Sign In</button>
+return   <a className={styles["auth-btn"]} onClick={() => signIn()}>Sign In</a>
 };
 
 export default SignInButton;

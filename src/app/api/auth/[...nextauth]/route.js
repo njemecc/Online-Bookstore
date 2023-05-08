@@ -11,9 +11,10 @@ const handler = NextAuth({
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        email: { label: "Email", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
+  
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
         const res = await fetch("http://localhost:3000/api/auth/login", {
@@ -22,12 +23,13 @@ const handler = NextAuth({
             "Content-Type": "application/jsom",
           },
           body: JSON.stringify({
-            username: credentials.username,
+            email: credentials.email,
             password: credentials.password,
           }),
         });
-
+   
         const user = await res.json();
+       
 
         if (user) {
           console.log("user je", user);
@@ -43,6 +45,21 @@ const handler = NextAuth({
       },
     }),
   ],
+  pages:{
+    signIn:"/signup"
+
+  },
+  callbacks:{
+    async jwt({token,user}){
+      return {
+        ...token,...user
+      }
+    },
+    async session({session,token}){
+      session.user = token
+      return session
+    }
+  }
 });
 
 export { handler as GET, handler as POST };
