@@ -1,0 +1,9 @@
+.books-wrapper{
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10%;
+}
+

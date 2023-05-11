@@ -16,7 +16,7 @@ const NavBar = () => {
     <div className={styles["nav-wrapper"]}>
       <nav className={styles["shadow"]}>
       <div className={styles["nav-levi-cosak"]}>
-        <Link href="/"><IconContext.Provider
+        <Link href="/library"><IconContext.Provider
       value={{ color: 'white', size: '3rem' }}
     >
       <div>
