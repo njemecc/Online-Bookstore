@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 //hooks
-import { useState,useRef } from "react";
+import { useState, useRef } from "react";
 
 //images
 import logo from "../../images/logo.png";
@@ -31,46 +31,40 @@ const Signup = () => {
 
   //login logika
 
-  const loginEmailRef = useRef()
-  const loginPasswordRef = useRef()
+  const loginEmailRef = useRef();
+  const loginPasswordRef = useRef();
 
   const loginUserHandler = async (e) => {
-    e.preventDefault()
-    const result = await signIn("credentials",{
-      email:loginEmailRef.current.value,
-      password:loginPasswordRef.current.value,
-      redirect:true,
-      callbackUrl:"/"
-    })
-  }
+    e.preventDefault();
+    const result = await signIn("credentials", {
+      email: loginEmailRef.current.value,
+      password: loginPasswordRef.current.value,
+      redirect: true,
+      callbackUrl: "/library",
+    });
 
+    // const rezultat = await result.json();
+  };
 
   //register refovi
-  const registerEmailRef = useRef()
-  const registerPasswordRef = useRef()
-  const registerNameRef = useRef()
-  const registerSurnameRef = useRef()
-  const registerAdressRef = useRef()
-  const registerPhoneRef = useRef()
+  const registerEmailRef = useRef();
+  const registerPasswordRef = useRef();
+  const registerNameRef = useRef();
+  const registerSurnameRef = useRef();
+  const registerAdressRef = useRef();
+  const registerPhoneRef = useRef();
 
   //register logika
   const signupActionHandler = () => {
-
-  signupFunction({
-    email:registerEmailRef.current.value,
-    password:registerPasswordRef.current.value,
-    name:registerNameRef.current.value,
-    surname:registerSurnameRef.current.value,
-    adress:registerAdressRef.current.value,
-    phone:registerPhoneRef.current.value
-  })
-
-  }
-
-
-
-
-  
+    signupFunction({
+      email: registerEmailRef.current.value,
+      password: registerPasswordRef.current.value,
+      name: registerNameRef.current.value,
+      surname: registerSurnameRef.current.value,
+      adress: registerAdressRef.current.value,
+      phone: registerPhoneRef.current.value,
+    });
+  };
 
   return (
     <div className="wrapper">
@@ -93,14 +87,28 @@ const Signup = () => {
                 </legend>
                 <div class="input-block">
                   <label for="login-email">E-mail</label>
-                  <input ref={loginEmailRef} id="login-email" type="email" required />
+                  <input
+                    ref={loginEmailRef}
+                    id="login-email"
+                    type="email"
+                    required
+                  />
                 </div>
                 <div class="input-block">
                   <label for="login-password">Password</label>
-                  <input ref={loginPasswordRef} id="login-password" type="password" required />
+                  <input
+                    ref={loginPasswordRef}
+                    id="login-password"
+                    type="password"
+                    required
+                  />
                 </div>
               </fieldset>
-              <button onClick={loginUserHandler} type="submit" class="btn-login">
+              <button
+                onClick={loginUserHandler}
+                type="submit"
+                class="btn-login"
+              >
                 Login
               </button>
             </form>
@@ -123,36 +131,70 @@ const Signup = () => {
                 <div>
                   <div class="input-block">
                     <label for="signup-password-confirm">Name</label>
-                    <input ref={registerNameRef} id="signup-password-confirm" type="text" required />
+                    <input
+                      ref={registerNameRef}
+                      id="signup-password-confirm"
+                      type="text"
+                      required
+                    />
                   </div>
 
                   <div class="input-block">
                     <label for="signup-email">E-mail</label>
-                    <input ref={registerEmailRef} id="signup-email" type="email" required />
+                    <input
+                      ref={registerEmailRef}
+                      id="signup-email"
+                      type="email"
+                      required
+                    />
                   </div>
                   <div class="input-block">
                     <label for="adress">Adress</label>
-                    <input ref={registerAdressRef} id="adress" type="text" required />
+                    <input
+                      ref={registerAdressRef}
+                      id="adress"
+                      type="text"
+                      required
+                    />
                   </div>
                 </div>
 
                 <div>
                   <div class="input-block">
                     <label for="surname">Surname</label>
-                    <input ref={registerSurnameRef} id="surname" type="text" required />
+                    <input
+                      ref={registerSurnameRef}
+                      id="surname"
+                      type="text"
+                      required
+                    />
                   </div>
                   <div class="input-block">
                     <label for="signup-password">Password</label>
-                    <input ref={registerPasswordRef} id="signup-password" type="password" required />
+                    <input
+                      ref={registerPasswordRef}
+                      id="signup-password"
+                      type="password"
+                      required
+                    />
                   </div>
 
                   <div class="input-block">
                     <label for="mobile">Phone</label>
-                    <input ref={registerPhoneRef} id="mobile" type="number" required />
+                    <input
+                      ref={registerPhoneRef}
+                      id="mobile"
+                      type="number"
+                      required
+                    />
                   </div>
                 </div>
               </fieldset>
-              <button onClick={signupActionHandler}  type="submit" class="btn-signup">
+              <button
+                onClick={signupActionHandler}
+                type="submit"
+                class="btn-signup"
+              >
                 signup
               </button>
             </form>

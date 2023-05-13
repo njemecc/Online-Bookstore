@@ -1,9 +1,11 @@
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 var(--hover); }
+  0% {
+    box-shadow: 0 0 0 0 var(--hover);
+  }
 }
 .wrapper {
   margin: 0;
-  background: var(--primary-color);
+  background: var(--svetla);
   height: 100vh;
 }
 
@@ -87,12 +89,12 @@
 }
 
 .form-wrapper.is-active .switcher-login {
-  color: var(--svetla);
+  color: var(--green);
   transform: translateX(90px);
 }
 
 .form-wrapper.is-active .switcher-signup {
-  color: #fff;
+  color: var(--green);
   transform: translateX(-90px);
 }
 
@@ -288,17 +290,19 @@
   color: var(--svetla);
   background: var(--green);
   transform: translateX(-30%);
-  
 }
 
 .btn-signup {
   color: var(--svetla);
   background: var(--green);
-  
+
   transform: translateX(30%);
 }
 
-.btn-login:hover,.btn-login:focus , .btn-signup:hover,.btn-signup:focus{
+.btn-login:hover,
+.btn-login:focus,
+.btn-signup:hover,
+.btn-signup:focus {
   box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
   transform: translateY(-0.25em);
   border: 1px solid var(--green);

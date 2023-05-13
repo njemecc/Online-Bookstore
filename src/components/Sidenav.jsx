@@ -1,114 +1,256 @@
-'use client'
+"use client";
 import React from "react";
-import { Drawer,Box,Typography,IconButton} from "@mui/material";
+import { Drawer, Slider, IconButton } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import { useState } from "react";
 
 //styles
-import styles from "./Sidenav.module.css"
+import styles from "./Sidenav.module.css";
+
+//redux
+import { useSelector, useDispatch } from "react-redux";
+import { cartActions } from "@/store/slices/cartSlice";
 
 const Sidenav = () => {
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const booksToShow = useSelector((state) => state.cart.libraryBooksToShow);
+  const dispatch = useDispatch();
 
- const [isSideNavOpen,setIsSideNavOpen] = useState(false)
+  const backupBooksToShow = useSelector(
+    (state) => state.cart.libraryBooksToShowCopy
+  );
 
+  const mark = [
+    {
+      value: 0,
+      label: "0$",
+    },
+    {
+      value: 10,
+      label: "10$",
+    },
 
-  return(
-  <>
-  <IconButton size="large" edge="start" color="inherit" aria-label="logo" onClick={() => setIsSideNavOpen(true)}>
-    <Search className={styles["search-icon"]}/>
-  </IconButton>
-  <Drawer sx={{width:"1000px"}} className={styles["drawer"]} anchor="left" open={isSideNavOpen} onClose={() => setIsSideNavOpen(false)}>
-    <div className={styles["drawer-wrapper"]}>
-    <div className={styles["search-wrapper"]}>
-       <div className={styles["search-naslov"]}>
-        <h1>Find your book.</h1>
+    {
+      value: 36,
+      label: "36$",
+    },
+    {
+      value: 25,
+      label: "25$",
+    },
+    {
+      value: 50,
+      label: "50$",
+    },
+    {
+      value: 100,
+      label: "100$",
+    },
+  ];
+
+  console.log(booksToShow);
+
+  const searchInputChangeHandler = (e) => {
+    setSearchText(e.target.value);
+    if (e.target.value == "") {
+      dispatch(cartActions.changeBooksLibrary(backupBooksToShow));
+    } else {
+      const newBooks = booksToShow.filter((book) =>
+        book.name.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      dispatch(cartActions.changeBooksLibrary(newBooks));
+    }
+  };
+
+  const SearchByCategoryHandler = (e) => {
+    const genre = e.target.name;
+
+    const genreBooks = backupBooksToShow.filter(
+      (book) => book.genre.toLowerCase() == genre.toLowerCase()
+    );
+
+    dispatch(cartActions.changeBooksLibrary(genreBooks));
+  };
+
+  const searchByWritterHandler = (e) => {
+    const writer = e.target.name;
+
+    const writerBooks = backupBooksToShow.filter(
+      (book) => book.author.toLowerCase() == writer.toLowerCase()
+    );
+
+    dispatch(cartActions.changeBooksLibrary(writerBooks));
+  };
+  return (
+    <>
+      <IconButton
+        size="large"
+        edge="start"
+        color="inherit"
+        aria-label="logo"
+        onClick={() => setIsSideNavOpen(true)}
+      >
+        <Search className={styles["search-icon"]} />
+      </IconButton>
+      <Drawer
+        sx={{ width: "1000px" }}
+        className={styles["drawer"]}
+        anchor="left"
+        open={isSideNavOpen}
+        onClose={() => setIsSideNavOpen(false)}
+      >
+        <div className={styles["drawer-wrapper"]}>
+          <div className={styles["search-wrapper"]}>
+            <div className={styles["search-naslov"]}>
+              <h1>Find your book.</h1>
+            </div>
+
+            <div className={styles["input-box"]}>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="logo"
+                onClick={() => setIsSideNavOpen(true)}
+              >
+                <Search className={styles["input-search-icon"]} />
+              </IconButton>
+              <input
+                placeholder="Search book..."
+                type="text"
+                name="book-name"
+                onInput={searchInputChangeHandler}
+              />
+            </div>
+
+            <div className={styles["check-box-container"]}>
+              <label className={styles["form-control"]}>
+                <input
+                  onChange={SearchByCategoryHandler}
+                  type="checkbox"
+                  name="self improvement"
+                />
+                Self Improvment
+              </label>
+
+              <label className={styles["form-control"]}>
+                <input
+                  onChange={SearchByCategoryHandler}
+                  type="checkbox"
+                  name="psyhology"
+                />
+                Psyhology
+              </label>
+              <label className={styles["form-control"]}>
+                <input
+                  onChange={SearchByCategoryHandler}
+                  type="checkbox"
+                  name="fantasy"
+                />
+                Fantasy
+              </label>
+              <label className={styles["form-control"]}>
+                <input
+                  onChange={SearchByCategoryHandler}
+                  type="checkbox"
+                  name="horror"
+                />
+                Horror
+              </label>
+              <label className={styles["form-control"]}>
+                <input
+                  onChange={SearchByCategoryHandler}
+                  type="checkbox"
+                  name="classic"
+                />
+                Classic
+              </label>
+              <label className={styles["form-control"]}>
+                <input
+                  onChange={SearchByCategoryHandler}
+                  type="checkbox"
+                  name="thriller"
+                />
+                Thriller
+              </label>
+              <label className={styles["form-control"]}>
+                <input
+                  onChange={SearchByCategoryHandler}
+                  type="checkbox"
+                  name="sci-fi"
+                />
+                Sci fi
+              </label>
+            </div>
+            <div className={styles["slider-div"]}>
+              <Slider defaultValue={10} max={100} marks={mark} />
+            </div>
+            <div className={styles["list-choice"]}>
+              <div className={styles["list-choice-title"]}>Writter</div>
+              <div className={styles["list-choice-objects"]}>
+                <label>
+                  <input
+                    onClick={searchByWritterHandler}
+                    type="radio"
+                    name="George R.R. Martin"
+                  />{" "}
+                  <span>George R.R. Martin</span>
+                </label>
+                <label>
+                  <input
+                    onClick={searchByWritterHandler}
+                    type="radio"
+                    name="J.R.R Tolkien"
+                  />{" "}
+                  <span>J.R.R Tolkien</span>
+                </label>
+                <label>
+                  <input
+                    onClick={searchByWritterHandler}
+                    type="radio"
+                    name="Robert Kyosaki"
+                  />{" "}
+                  <span>Robert Kyosaki</span>
+                </label>
+                <label>
+                  <input
+                    onClick={searchByWritterHandler}
+                    type="radio"
+                    name="Napoleon Hill"
+                  />{" "}
+                  <span>Napoleon Hill</span>
+                </label>
+                <label>
+                  <input
+                    onClick={searchByWritterHandler}
+                    type="radio"
+                    name="Peter Thiel"
+                  />{" "}
+                  <span>Peter Thiel</span>
+                </label>
+                <label>
+                  <input
+                    onClick={searchByWritterHandler}
+                    type="radio"
+                    name="Morgan Housel"
+                  />{" "}
+                  <span>Morgan Housel</span>
+                </label>
+              </div>
+            </div>
+            {/* <div className={styles["search-button-div"]}>
+              <button
+                onClick={searchByParametersHandler}
+                className={styles["search-button"]}
+              >
+                Search
+              </button>
+            </div> */}
+          </div>
         </div>
-
-    <div className={styles["input-box"]}>
-        
-    <IconButton   edge="start" color="inherit" aria-label="logo" onClick={() => setIsSideNavOpen(true)}>
-    <Search className={styles["input-search-icon"]} />
-  </IconButton>
-        <input placeholder="Search book..." type="text" name="book-name" />
-    </div>
-
-    <div className={styles["check-box-container"]}>
-    <label className={styles["form-control"]}>
-  <input type="checkbox" name="checkbox" />
-  Self Improvment
-</label>
-
-<label className={styles["form-control"]}>
-  <input type="checkbox" name="checkbox-checked"  />
-  Psyhology
-</label>
-<label className={styles["form-control"]}>
-  <input type="checkbox" name="checkbox-checked"  />
-  Fantasy
-</label>
-<label className={styles["form-control"]}>
-  <input type="checkbox" name="checkbox-checked"  />
-  Horror
-</label>
-<label className={styles["form-control"]}>
-  <input type="checkbox" name="checkbox-checked"  />
-  Classic
-</label>
-<label className={styles["form-control"]}>
-  <input type="checkbox" name="checkbox-checked"  />
-Thriller 
-    </label>
-    <label className={styles["form-control"]}>
-  <input type="checkbox" name="checkbox-checked"  />
-  Sci fi
-</label>
-    </div>
-    <div className={styles["list-choice"]}>
-  <div className={styles["list-choice-title"]}>Month</div>
-  <div className={styles["list-choice-objects"]}>
-    <label>
-      <input type="radio" name="month"/>                         <span>January</span>
-    </label>
-    <label>
-      <input type="radio" name="month"/>                         <span>February</span>
-    </label>
-    <label>
-      <input type="radio" name="month"/>                         <span>March</span>
-    </label>
-    <label>
-      <input type="radio" name="month"/>                         <span>April</span>
-    </label>
-    <label>
-      <input type="radio" name="month"/>                         <span>May</span>
-    </label>
-    <label>
-      <input type="radio" name="month"/>                         <span>June</span>
-    </label>
-    <label>
-      <input type="radio" name="month"/>                         <span>July</span>
-    </label>
-    <label>
-      <input type="radio" name="month"/>                         <span>September</span>
-    </label>
-    <label>
-      <input type="radio" name="month"/>                         <span>October</span>
-    </label>
-    <label>
-      <input type="radio" name="month"/>                         <span>November</span>
-    </label>
-    <label>
-      <input type="radio" name="month"/>                         <span>December</span>
-    </label>
-  </div>
-</div>
-    
-
-    </div>
-    </div>
-
-  </Drawer>
-  </>
-);
-  }
+      </Drawer>
+    </>
+  );
+};
 
 export default Sidenav;

@@ -1,10 +1,17 @@
 "use client";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 //session
 import { SessionProvider } from "next-auth/react";
 import Providers from "@/components/Providers";
 import NavBar from "@/components/NavBar";
+import { ToastContainer } from "react-toastify";
+
+//redux
+import store from "@/store/reduxStore";
+
+import { Provider } from "react-redux";
 
 export const metadata = {
   title: "Create Next App",
@@ -15,9 +22,12 @@ export default function RootLayout({ children, session }) {
   return (
     <html lang="en">
       <body>
-        <Providers>
-          <NavBar /> {children}
-        </Providers>
+        <Provider store={store}>
+          <Providers>
+            <NavBar /> {children}
+            <ToastContainer position="top-right" autoClose={3000} />
+          </Providers>
+        </Provider>
       </body>
     </html>
   );
