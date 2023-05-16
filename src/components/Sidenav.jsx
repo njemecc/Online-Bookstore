@@ -82,6 +82,15 @@ const Sidenav = () => {
 
     dispatch(cartActions.changeBooksLibrary(writerBooks));
   };
+
+  const searchByPriceHandler = (e) => {
+    const price = e.target.value;
+    const priceBooks = backupBooksToShow.filter(
+      (book) => Number(book.price.substring(0, book.price.length - 1)) == price
+    );
+    dispatch(cartActions.changeBooksLibrary(priceBooks));
+  };
+
   return (
     <>
       <IconButton
@@ -183,7 +192,12 @@ const Sidenav = () => {
               </label>
             </div>
             <div className={styles["slider-div"]}>
-              <Slider defaultValue={10} max={100} marks={mark} />
+              <Slider
+                onChange={searchByPriceHandler}
+                defaultValue={10}
+                max={100}
+                marks={mark}
+              />
             </div>
             <div className={styles["list-choice"]}>
               <div className={styles["list-choice-title"]}>Writter</div>

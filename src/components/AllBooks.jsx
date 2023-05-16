@@ -24,6 +24,7 @@ const AllBooks = () => {
 
   const booksToShow = books?.map((book) => (
     <BookItem
+      id={book._id}
       price={book.price}
       key={book.id}
       name={book.name}

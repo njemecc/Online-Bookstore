@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -8,6 +9,8 @@ import Typography from "@mui/material/Typography";
 
 //sesija
 import { useSession } from "next-auth/react";
+
+import Link from "next/link";
 
 //funkcija
 import addBookToCart from "../../lib/addBookToCart";
@@ -37,29 +40,31 @@ export default function BookItem(props) {
   };
 
   return (
-    <Card className={styles["book"]}>
-      <div className={styles["book-img-div"]}>
-        <img
-          src={props.image}
-          alt="book-image"
-          className={styles["book-img"]}
-        />
-      </div>
-      <CardContent className={styles["card-content"]}>
-        <p className={styles["book-name"]}>{props.name}</p>
-        <Typography variant="body2" color="text.secondary">
-          {props.author}
-        </Typography>
-      </CardContent>
-      <div className={styles["price-div"]}>
-        <h4>{props.price}</h4>
-      </div>
-      <CardActions className={styles["button-div"]}>
-        <Button onClick={addBookToCartHandler} size="small">
-          Add to cart
-        </Button>
-        {/* <Button size="small">Learn More</Button> */}
-      </CardActions>
+    <Card key={props.key} className={styles["book"]}>
+      <Link href={{ pathname: "/library/book", query: { id: props.id } }}>
+        <div className={styles["book-img-div"]}>
+          <img
+            src={props.image}
+            alt="book-image"
+            className={styles["book-img"]}
+          />
+        </div>
+        <CardContent className={styles["card-content"]}>
+          <p className={styles["book-name"]}>{props.name}</p>
+          <Typography variant="body2" color="text.secondary">
+            {props.author}
+          </Typography>
+        </CardContent>
+        <div className={styles["price-div"]}>
+          <h4>{props.price}</h4>
+        </div>
+        <CardActions className={styles["button-div"]}>
+          <Button onClick={addBookToCartHandler} size="small">
+            Add to cart
+          </Button>
+          {/* <Button size="small">Learn More</Button> */}
+        </CardActions>
+      </Link>
     </Card>
   );
 }

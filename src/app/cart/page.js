@@ -17,6 +17,7 @@ import Link from "next/link";
 
 import { useSelector, dispatch, useDispatch } from "react-redux";
 import clearCart from "../../../lib/clearCart";
+import addCartRecord from "../../../lib/addCartRecord";
 
 const Cart = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +25,7 @@ const Cart = () => {
 
   const { data } = useSession();
   const booksToShow = useSelector((state) => state.cart.booksToShow);
+  console.log("BrontoSHOO", booksToShow);
 
   const subtotal = useSelector((state) => state.cart.subtotal);
 
@@ -56,7 +58,21 @@ const Cart = () => {
     const email = data.user.email;
     dispatch(cartActions.emptyCart());
     clearCart(email);
-    toast.warn(`Your cart is empty.`, {
+    // toast.warn(`Your cart is empty.`, {
+    //   position: toast.POSITION.BOTTOM_RIGHT,
+    //   autoClose: 3000,
+    //   hideProgressBar: false,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    // });
+  };
+
+  const checkoutHandler = () => {
+    const email = data.user.email;
+    addCartRecord({ email, books: booksToShow, totalPrice: subtotal });
+
+    toast.success("Your order has been sent successfully", {
       position: toast.POSITION.BOTTOM_RIGHT,
       autoClose: 3000,
       hideProgressBar: false,
@@ -64,7 +80,9 @@ const Cart = () => {
       draggable: true,
       progress: undefined,
     });
+    clearCartHandler();
   };
+
   return (
     <div className={styles["cart-container"]}>
       <h2>Shopping Cart</h2>
@@ -102,8 +120,8 @@ const Cart = () => {
             {booksToShow.length != 0 &&
               booksToShow.map((cartItem) => (
                 <CartItem
-                  id={cartItem.id}
                   name={cartItem.name}
+                  id={cartItem.id}
                   image={cartItem.image}
                   desc={cartItem.desc}
                   price={cartItem.price}
@@ -122,7 +140,12 @@ const Cart = () => {
                 </span>
               </div>
               <p>Taxes and shipping calculated at checkout</p>
-              <button className={styles["checkout-button"]}>Check out</button>
+              <button
+                onClick={checkoutHandler}
+                className={styles["checkout-button"]}
+              >
+                Check out
+              </button>
               <div className={styles["continue-shopping"]}>
                 <Link href="/library">
                   <svg

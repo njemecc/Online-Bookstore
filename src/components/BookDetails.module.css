@@ -1,0 +1,51 @@
+.book-details-wrapper {
+  width: 80%;
+  /* border: 1px solid red; */
+  margin: 0 auto;
+  margin-top: 4%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.image-div {
+  width: 30% !important;
+  height: 40%;
+}
+
+.image-div img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.book-description-div {
+  width: 65%;
+}
+
+.book-description-div p {
+  font-size: 1.2rem;
+}
+
+.div-opis {
+  display: flex;
+  gap: 0.2rem;
+  text-align: center;
+  margin-top: 0.3rem;
+}
+
+.div-opis h4 {
+  font-size: 1.2rem;
+}
+
+.addToCart-button {
+  margin-top: 5%;
+  padding: 1.5rem 3rem;
+  font-size: 2rem;
+  text-transform: capitalize;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;
+}
+
+.addToCart-button:hover {
+  cursor: pointer;
+}
