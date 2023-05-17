@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 
 //styles
@@ -6,11 +5,6 @@ import styles from "../components/BookDetails.module.css";
 
 //toast
 import { toast } from "react-toastify";
-
-import { useEffect, useState } from "react";
-
-//session
-import { useSession } from "next-auth/react";
 
 //function
 import addBookToCart from "../../lib/addBookToCart";
@@ -25,36 +19,10 @@ const BookDetails = ({
   price,
   description,
   image,
-  stars,
+  starsNumber,
+  didThisUserRated,
 }) => {
-  const { data: session } = useSession();
-  //meni samo iz baze zapravo treba informacija da li je user vec kupio tu knjigu ili ne nista vise.
-  const [thisUserRecords]
-
-  const getCartRecords = async () => {
-    const res = await fetch("/api/getCartRecordByEmail", {
-      method: "POST",
-      body: JSON.stringify(data.user.email),
-    });
-
-    const response = await res.json();
-
-    return response;
-  };
-
-  useEffect(() => {
-    //ovde ce mi opet trebati await
-    const res = getCartRecords();
-  }, []);
-
-  let averageValue = 0;
-
-  for (let i = 0; i < stars.length; i++) {
-    averageValue += Number(stars[i]);
-  }
-
-  averageValue = averageValue / stars.length;
-
+  
   const addBookToCartHandler = () => {
     toast.success(`${name} added to the cart!`, {
       position: toast.POSITION.BOTTOM_RIGHT,
@@ -112,7 +80,7 @@ const BookDetails = ({
           <h4>Year</h4>
           <p>{year}</p>
         </div>
-        <RatingStars value={averageValue} />
+        <RatingStars readOnly={didThisUserRated} value={starsNumber} />
 
         <button
           onClick={addBookToCartHandler}

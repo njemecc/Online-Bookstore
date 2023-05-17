@@ -13,12 +13,12 @@ export async function POST(request) {
 
     const book = allBooks.filter((book) => book._id.toString().includes(id));
 
-    console.log(id);
-    console.log(book);
+
+    await disconnectDB();
 
     return new Response(JSON.stringify(book));
 
-    await disconnectDB();
+   
   } catch (error) {
     console.error(error);
   }
