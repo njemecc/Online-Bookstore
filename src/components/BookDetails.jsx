@@ -19,10 +19,9 @@ const BookDetails = ({
   price,
   description,
   image,
-  starsNumber,
   didThisUserRated,
+  email,
 }) => {
-  
   const addBookToCartHandler = () => {
     toast.success(`${name} added to the cart!`, {
       position: toast.POSITION.BOTTOM_RIGHT,
@@ -45,10 +44,12 @@ const BookDetails = ({
     };
 
     addBookToCart({
-      email: session.user.email,
+      email: email,
       props,
     });
   };
+
+  console.log("jel user", didThisUserRated);
 
   return (
     <div className={styles["book-details-wrapper"]}>
@@ -80,8 +81,8 @@ const BookDetails = ({
           <h4>Year</h4>
           <p>{year}</p>
         </div>
-        <RatingStars readOnly={didThisUserRated} value={starsNumber} />
 
+        <RatingStars email={email} name={name} />
         <button
           onClick={addBookToCartHandler}
           className={styles["addToCart-button"]}

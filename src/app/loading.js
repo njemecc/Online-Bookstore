@@ -1,7 +1,9 @@
-import React from "react";
+import "./loading.css";
 
-const loading = () => {
-  return <div>LOADING</div>;
-};
-
-export default loading;
+export default function Loading() {
+  return (
+    <div class="container">
+      <div class="loader"></div>
+    </div>
+  );
+}

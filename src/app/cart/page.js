@@ -19,6 +19,8 @@ import { useSelector, dispatch, useDispatch } from "react-redux";
 import clearCart from "../../../lib/clearCart";
 import addCartRecord from "../../../lib/addCartRecord";
 
+import Loading from "../../app/loading";
+
 const Cart = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -31,6 +33,7 @@ const Cart = () => {
 
   useEffect(() => {
     const fetcherFunction = async () => {
+      setIsLoading(true);
       const response = await fetch("/api/getCartBooks", {
         method: "POST",
         body: JSON.stringify(data.user.email),
@@ -58,14 +61,6 @@ const Cart = () => {
     const email = data.user.email;
     dispatch(cartActions.emptyCart());
     clearCart(email);
-    // toast.warn(`Your cart is empty.`, {
-    //   position: toast.POSITION.BOTTOM_RIGHT,
-    //   autoClose: 3000,
-    //   hideProgressBar: false,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    // });
   };
 
   const checkoutHandler = () => {
@@ -83,11 +78,16 @@ const Cart = () => {
     clearCartHandler();
   };
 
+  const emptyCartClassNames = isLoading
+    ? styles[("cart-empty", "invisible")]
+    : styles["cart-empty"];
+
   return (
     <div className={styles["cart-container"]}>
       <h2>Shopping Cart</h2>
+      {isLoading ? <Loading /> : ""}
       {booksToShow.length === 0 ? (
-        <div className={styles["cart-empty"]}>
+        <div className={emptyCartClassNames}>
           <p>Your cart is currently empty</p>
           <div className={styles["start-shopping"]}>
             <Link href="/library">

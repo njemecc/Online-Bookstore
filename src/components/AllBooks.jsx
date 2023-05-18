@@ -8,6 +8,9 @@ import styles from "../components/AllBooks.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { cartActions } from "@/store/slices/cartSlice";
 
+//loading
+import Loader from "../app/loading";
+
 const AllBooks = () => {
   const [isLoading, setIsLoading] = useState(false);
   const books = useSelector((state) => state.cart.libraryBooksToShow);
@@ -39,7 +42,7 @@ const AllBooks = () => {
 
   return (
     <div className={styles["books-wrapper"]}>
-      {isLoading ? "Loading..." : booksToShow}
+      {isLoading ? <Loader /> : booksToShow}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import Link from "next/link";
 
 //components
 import SignInButton from "./SignInButton";
+import Modal from "../components/Modal";
 
 //styles
 import styles from "../components/Navbar.module.css";
@@ -11,7 +12,15 @@ import { BsBook } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
 import { IconContext } from "react-icons";
 
+//redux
+import { useDispatch } from "react-redux";
+import { cartActions } from "@/store/slices/cartSlice";
+
 const NavBar = () => {
+  const dispatch = useDispatch();
+
+  const handleOpen = () => dispatch(cartActions.setModalOpenTrue());
+
   return (
     <div className={styles["nav-wrapper"]}>
       <nav className={styles["shadow"]}>
@@ -23,7 +32,9 @@ const NavBar = () => {
               </div>
             </IconContext.Provider>
           </Link>
-          <Link href="/profile">Profile</Link>
+          <a className={styles["profile-p"]} onClick={handleOpen}>
+            Profile
+          </a>
         </div>
         <div className={styles["nav-desni-cosak"]}>
           <Link href="/cart">
@@ -34,6 +45,7 @@ const NavBar = () => {
             </IconContext.Provider>
           </Link>
           <SignInButton />
+          <Modal />
         </div>
       </nav>
     </div>

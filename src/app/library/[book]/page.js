@@ -8,60 +8,65 @@ import getBookDetails from "../../../../lib/getBookDetails";
 
 //components
 import BookDetails from "@/components/BookDetails";
-
+import Loader from "../../../app/loading";
 
 //session
 import { useSession } from "next-auth/react";
 import { EmailOutlined } from "@mui/icons-material";
+import { useSelector, useDispatch } from "react-redux";
+import { cartActions } from "@/store/slices/cartSlice";
 
 const BookDetailsPage = () => {
   const searchParams = useSearchParams();
   const [book, setBook] = useState([]);
 
+  const starsValue = useSelector((state) => state.cart.starsValue);
+  const didThisUserRated = useSelector((state) => state.cart.didThisUserRated);
+
   const { data: session } = useSession();
   const email = session?.user.email;
   const id = searchParams.get("id");
+  const dispatch = useDispatch();
 
-  const [didThisUserRated,setDidThisUserRated] = useState(false);
-  const[starsNumber,setStarsNumber] = useState(0)
-
-  
   useEffect(() => {
     async function izvrsi() {
       const res = await getBookDetails(id);
-    setBook(res[0]);
-    } 
+
+      if (res != undefined) {
+        setBook(res[0]);
+      }
+    }
     izvrsi();
-    
   }, []);
 
-  const stars = book.stars
+  const stars = book.stars;
 
-if (stars!= undefined){
+  if (stars != undefined) {
+    const sviEmailiKojiSuGlasali = stars?.map((star) => Object.keys(star));
 
-  const sviEmailiKojiSuGlasali = stars?.map(star=> Object.keys(star))
+    const emailKojiSeTrazi = sviEmailiKojiSuGlasali[0].filter(
+      (imejl) => imejl.toString() == email?.toString()
+    );
 
-  const emailKojiSeTrazi = sviEmailiKojiSuGlasali[0].filter(imejl => imejl.toString() == email?.toString())
-  
-  if(emailKojiSeTrazi != undefined && didThisUserRated == false){
-    setDidThisUserRated(true)
+    if (emailKojiSeTrazi.length > 0 && didThisUserRated == false) {
+      dispatch(cartActions.changeDidUserRated());
+    }
+
+    const sveVrednostiKojeSeTraze = stars.map((star) => Object.values(star));
+
+    if (starsValue == 0) {
+      let vrednost = sveVrednostiKojeSeTraze[0].reduce(
+        (acc, trenutni) => Number(acc) + Number(trenutni),
+        0
+      );
+
+      dispatch(cartActions.setSumOfRatings(vrednost));
+
+      dispatch(cartActions.setNumerOfRaters(sveVrednostiKojeSeTraze[0].length));
+
+      dispatch(cartActions.setStarsValue());
+    }
   }
-
-
-  const sveVrednostiKojeSeTraze = stars.map(star => Object.values(star))
-
-  if(starsNumber == 0){
-
-    let vrednost = sveVrednostiKojeSeTraze[0].reduce((acc,trenutni) => Number(acc) + Number(trenutni) ,0)
-    console.log("VREDNOSTI KOJE SE TRAZE:",sveVrednostiKojeSeTraze)
-    console.log("VREDNOST",vrednost)
-
-    vrednost = vrednost / sveVrednostiKojeSeTraze[0].length
-
-    setStarsNumber(vrednost)
-  }
-
-}
   return (
     <div>
       {book.length != 0 ? (
@@ -75,11 +80,10 @@ if (stars!= undefined){
           description={book.description}
           image={book.image}
           stars={book.stars}
-          didThisUserRated={didThisUserRated}
-          starsNumber={starsNumber}
+          email={email}
         />
       ) : (
-        "loading..."
+        <Loader />
       )}
     </div>
   );

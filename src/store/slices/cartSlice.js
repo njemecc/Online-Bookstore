@@ -5,6 +5,11 @@ const cartInitialState = {
   booksToShow: [],
   libraryBooksToShow: [],
   libraryBooksToShowCopy: [],
+  didThisUserRated: false,
+  numberOfRaters: 0,
+  sumOfRatings: 0,
+  StarsValue: 0,
+  modalOpen: false,
 };
 
 export const cartSlice = createSlice({
@@ -28,6 +33,24 @@ export const cartSlice = createSlice({
     },
     emptyCart(state) {
       state.booksToShow = [];
+    },
+    changeDidUserRated(state) {
+      state.didThisUserRated = !state.didThisUserRated;
+    },
+    setNumerOfRaters(state, payload) {
+      state.numberOfRaters = payload.payload;
+    },
+    setSumOfRatings(state, payload) {
+      state.sumOfRatings += payload.payload;
+    },
+    setStarsValue(state) {
+      state.StarsValue = state.sumOfRatings / state.numberOfRaters;
+    },
+    setModalOpenTrue(state) {
+      state.modalOpen = true;
+    },
+    setModalOpenFalse(state) {
+      state.modalOpen = false;
     },
   },
 });
