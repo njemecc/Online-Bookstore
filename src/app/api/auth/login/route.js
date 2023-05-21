@@ -1,5 +1,5 @@
 import { connectDB, disconnectDB, client } from "../../../../../DB/main";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs"
 import { signJwtAccessToken } from "../../../../../lib/jwt";
 
 export async function POST(request) {

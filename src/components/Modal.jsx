@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import Modal from "@mui/material/Modal";
 
@@ -31,8 +29,7 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-  display: "flex",
-  gap: "1rem",
+ 
 };
 
 export default function BasicModal() {
@@ -42,7 +39,7 @@ export default function BasicModal() {
   const dispatch = useDispatch();
   const modalOpen = useSelector((state) => state.cart.modalOpen);
   const handleClose = () => dispatch(cartActions.setModalOpenFalse());
-
+  const [isDisabled,setIsDisabled] = useState(true)
   useEffect(() => {
     const getUser = async () => {
       const response = await fetch("/api/getUser", {
@@ -70,13 +67,15 @@ export default function BasicModal() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <div className={styles["my-profile"]}><h1 >My profile</h1></div> 
+          <div className={styles["text-fields-wrapper"]}>
           <div className={styles["text-field-div"]}>
             <h2>Name:</h2>
             <TextField
               id="outlined-basic"
               label={korisnik?.name}
               variant="outlined"
-              disabled={true}
+              disabled={isDisabled}
             />
           </div>
           <div className={styles["text-field-div"]}>
@@ -85,7 +84,7 @@ export default function BasicModal() {
               id="outlined-basic"
               label={korisnik?.surname}
               variant="outlined"
-              disabled={true}
+              disabled={isDisabled}
             />
           </div>
           <div className={styles["text-field-div"]}>
@@ -94,7 +93,7 @@ export default function BasicModal() {
               id="outlined-basic"
               label={korisnik?.adress}
               variant="outlined"
-              disabled={true}
+              disabled={isDisabled}
             />
           </div>
           <div className={styles["text-field-div"]}>
@@ -103,7 +102,7 @@ export default function BasicModal() {
               id="outlined-basic"
               label={korisnik?.phone}
               variant="outlined"
-              disabled={true}
+              disabled={isDisabled}
             />
           </div>
           <div className={styles["text-field-div"]}>
@@ -112,8 +111,13 @@ export default function BasicModal() {
               id="outlined-basic"
               label={korisnik?.email}
               variant="outlined"
-              disabled={true}
+              disabled={isDisabled}
             />
+          </div>
+          </div>
+          <div className={styles["buttons-div"]}>
+          <button onClick={ () => {setIsDisabled(false) }}>Change</button>
+          <button>Submit</button>
           </div>
         </Box>
       </Modal>

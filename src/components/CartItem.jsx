@@ -90,7 +90,7 @@ const CartItem = ({ id, name, image, desc, price, sendTotal }) => {
           <div className={styles["count"]}>{quantity}</div>
           <button onClick={handleIncreaseToCart}>+</button>
         </div>
-        <div className={styles["cart-product-total-price"]}>${total}</div>
+        <div className={styles["cart-product-total-price"]}>{total}</div>
       </div>
     </>
   );
