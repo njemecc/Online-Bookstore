@@ -8,9 +8,11 @@ import Modal from "../components/Modal";
 
 //styles
 import styles from "../components/Navbar.module.css";
-import { BsBook } from "react-icons/bs";
-import { FaShoppingCart } from "react-icons/fa";
-import { IconContext } from "react-icons";
+import { FaShoppingCart } from "@react-icons/all-files/fa/FaShoppingCart"
+import { BsBook } from "@react-icons/all-files/bs/BsBook";
+
+import { IconContext }
+ from "@react-icons/all-files";
 
 //redux
 import { useDispatch } from "react-redux";
