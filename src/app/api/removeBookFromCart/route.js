@@ -29,10 +29,10 @@ export async function POST(request) {
         { email: email },
         { $set: { books: newBooks } }
       );
+
+      await disconnectDB();
       return new Response(JSON.stringify(response));
     }
-
-    await disconnectDB();
   } catch (error) {
     console.error(error);
   }

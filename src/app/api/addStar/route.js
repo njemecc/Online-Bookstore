@@ -1,4 +1,3 @@
-import { ConstructionOutlined } from "@mui/icons-material";
 import { connectDB, disconnectDB, client } from "../../../../DB/main";
 export async function POST(request) {
   try {
@@ -26,9 +25,8 @@ export async function POST(request) {
       { $set: { stars: stars } }
     );
 
-    return new Response(JSON.stringify(response));
-
     await disconnectDB();
+    return new Response(JSON.stringify(response));
   } catch (error) {
     console.error(error);
   }

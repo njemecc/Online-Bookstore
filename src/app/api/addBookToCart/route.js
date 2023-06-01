@@ -1,4 +1,3 @@
-import { WarningAmberTwoTone } from "@mui/icons-material";
 import { connectDB, disconnectDB, client } from "../../../../DB/main";
 export async function POST(request) {
   try {
@@ -36,12 +35,9 @@ export async function POST(request) {
         books: [book],
       };
       const response = await usersBooksCollection.insertOne(dataToInsert);
+      await disconnectDB();
       return new Response(JSON.stringify(response));
     }
-
-    // return new Response(JSON.stringify(response));
-
-    //await disconnectDB();
   } catch (error) {
     console.error(error);
   }
