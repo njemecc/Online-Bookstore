@@ -12,7 +12,6 @@ import Loader from "../../../app/loading";
 
 //session
 import { useSession } from "next-auth/react";
-import { EmailOutlined } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
 import { cartActions } from "@/store/slices/cartSlice";
 

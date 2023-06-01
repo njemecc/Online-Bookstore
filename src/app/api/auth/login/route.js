@@ -1,5 +1,5 @@
 import { connectDB, disconnectDB, client } from "../../../../../DB/main";
-import * as bcrypt from "bcryptjs"
+import * as bcrypt from "bcryptjs";
 import { signJwtAccessToken } from "../../../../../lib/jwt";
 
 export async function POST(request) {
@@ -16,6 +16,7 @@ export async function POST(request) {
     })
     .toArray();
 
+  await disconnectDB();
 
   if (user.length != 0 && (await bcrypt.compare(password, user[0].password))) {
     const { password, ...userWithoutPass } = user;
@@ -35,10 +36,6 @@ export async function POST(request) {
 
     return new Response(JSON.stringify(userWithJwt));
   } else {
-    return new Response(
-      JSON.stringify(null)
-    );
+    return new Response(JSON.stringify(null));
   }
-
-
 }

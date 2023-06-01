@@ -1,4 +1,3 @@
-import { WarningAmberTwoTone } from "@mui/icons-material";
 import { connectDB, disconnectDB, client } from "../../../../DB/main";
 export async function POST(request) {
   try {
@@ -19,18 +18,16 @@ export async function POST(request) {
     console.log("books:", emailFinded[0].books);
 
     if (emailFinded[0] == undefined) {
+      await disconnectDB();
       return new Response(JSON.stringify("greska"));
     }
 
     console.log("emailFinded je", emailFinded);
 
     const response = emailFinded[0].books;
+    await disconnectDB();
 
     return new Response(JSON.stringify(response));
-
-    // return new Response(JSON.stringify(response));
-
-    //await disconnectDB();
   } catch (error) {
     console.error(error);
   }

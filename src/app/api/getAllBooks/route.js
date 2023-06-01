@@ -1,24 +1,26 @@
-import { connectDB,disconnectDB,client } from "../../../../DB/main"
+import { connectDB, disconnectDB, client } from "../../../../DB/main";
 export async function GET() {
-
   try {
-    await connectDB()
-    const db = client.db("online_bookstore")
- 
-    const booksCollection =  db.collection("books")
+    const datum = new Date();
+    await connectDB();
+    console.log("Await connectDb", new Date() - datum);
+    const db = client.db("online_bookstore");
 
-      const books  = await booksCollection.find().toArray()
+    console.log("db", new Date() - datum);
 
-      console.log(books)
+    const booksCollection = db.collection("books");
 
-      return new Response(JSON.stringify(books))
-     
-     await disconnectDB()   
+    console.log("collection", new Date() - datum);
+
+    const books = await booksCollection.find().toArray();
+
+    console.log("books", new Date() - datum);
+
+    console.log(books);
+
+    await disconnectDB();
+    return new Response(JSON.stringify(books));
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
- 
-
-   
-  
 }

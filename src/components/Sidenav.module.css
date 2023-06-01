@@ -1,7 +1,9 @@
 .search-icon {
   /*   background-color: var(--primary-color); */
   color: var(--primary-color);
-  font-size: 2.3rem;
+  font-size: 2rem;
+  margin-left: 1.5rem;
+  margin-top: 1rem;
 }
 
 .drawer div:nth-child(3) {
@@ -210,18 +212,4 @@
 
 .slider-div {
   margin-top: 1rem;
-}
-
-.search-button {
-  margin-top: 11rem;
-  padding: 1rem 0.5rem;
-  width: 50%;
-  font-size: 1.5rem;
-  background-color: var(--green);
-  color: white;
-}
-
-.search-button:hover {
-  opacity: 70%;
-  cursor: pointer;
 }

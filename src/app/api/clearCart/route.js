@@ -25,6 +25,7 @@ export async function POST(request) {
         { email: email },
         { $set: { books: [] } }
       );
+      await disconnectDB();
       return new Response(JSON.stringify(response));
     }
 

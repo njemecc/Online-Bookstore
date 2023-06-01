@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Drawer, Slider, IconButton } from "@mui/material";
-import { Search } from "@mui/icons-material";
 import { useState } from "react";
 
 //styles
@@ -10,6 +9,9 @@ import styles from "./Sidenav.module.css";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { cartActions } from "@/store/slices/cartSlice";
+
+//icons
+import { FaSearch } from "@react-icons/all-files/fa/FaSearch";
 
 const Sidenav = () => {
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
@@ -100,7 +102,7 @@ const Sidenav = () => {
         aria-label="logo"
         onClick={() => setIsSideNavOpen(true)}
       >
-        <Search className={styles["search-icon"]} />
+        <FaSearch className={styles["search-icon"]} />
       </IconButton>
       <Drawer
         sx={{ width: "1000px" }}
@@ -122,7 +124,7 @@ const Sidenav = () => {
                 aria-label="logo"
                 onClick={() => setIsSideNavOpen(true)}
               >
-                <Search className={styles["input-search-icon"]} />
+                <FaSearch className={styles["input-search-icon"]} />
               </IconButton>
               <input
                 placeholder="Search book..."
