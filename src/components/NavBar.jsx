@@ -6,7 +6,7 @@ import Link from "next/link";
 import SignInButton from "./SignInButton";
 import Modal from "../components/Modal";
 
-//styles
+//stylesbcry
 import styles from "../components/Navbar.module.css";
 import { FaShoppingCart } from "@react-icons/all-files/fa/FaShoppingCart";
 import { BsBook } from "@react-icons/all-files/bs/BsBook";
