@@ -1,4 +1,3 @@
-import { WarningAmberTwoTone } from "@mui/icons-material";
 import { connectDB, disconnectDB, client } from "../../../../DB/main";
 export async function POST(request) {
   try {
