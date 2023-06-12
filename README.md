@@ -5,11 +5,22 @@
 ## The full stack web application
 
 ### Main Technologies have been used:
-#### Next.js 13.4
-#### React
-#### Redux
-#### MongoDb
+#### Next.js 13.4,React 18,Redux, MongoDB
 
+#Home Page
+![home](https://github.com/njemecc/Online-Bookstore/assets/105017037/23d4025c-5a48-4a7e-bf04-337916a058c0)
+
+![home2](https://github.com/njemecc/Online-Bookstore/assets/105017037/cc8b0cfe-aa67-4560-b6db-c7477165fa7a)
+
+#Book Details Page
+![Screenshot_1](https://github.com/njemecc/Online-Bookstore/assets/105017037/0f3b40aa-8bd5-4929-b03a-762f41576275)
+
+
+#Cart
+![Screenshot_2](https://github.com/njemecc/Online-Bookstore/assets/105017037/2ca0d67c-6060-4aa0-92f0-4ea01d46fc9f)
+
+#Sign up/Sign in
+![Screenshot_3](https://github.com/njemecc/Online-Bookstore/assets/105017037/7da155b7-fa28-48ba-8791-a9e29c8fc809)
 
 
 
