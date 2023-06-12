@@ -2,6 +2,16 @@
 
 ![Library_Softkware](https://github.com/njemecc/Online-Bookstore/assets/105017037/78959245-9ac5-4c73-b06b-48aa33265abd)
 
+## The full stack web application
+
+### Main Technologies have been used:
+#### Next.js 13.4
+#### React
+#### Redux
+#### MongoDb
+
+
+
 
 
 
