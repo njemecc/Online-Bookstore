@@ -8,6 +8,8 @@ width: 100%;
     margin: 0 auto;
     width: 30%;
     margin-bottom: 2rem;
+  
+    text-align: center;
 }
 
 .buttons-div{
@@ -31,4 +33,11 @@ width: 100%;
 .buttons-div button:hover{
     opacity: 70%;
     cursor: pointer;
+}
+
+.input-custom{
+    padding: 1rem;
+    margin-top: 0.5rem;
+    width: 105%;
+    border-top: 1px solid black;
 }

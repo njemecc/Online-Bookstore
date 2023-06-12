@@ -17,7 +17,7 @@ import { cartActions } from "@/store/slices/cartSlice";
 import { useSession } from "next-auth/react";
 
 //hooks
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 
 const style = {
   position: "absolute",
@@ -40,6 +40,42 @@ export default function BasicModal() {
   const modalOpen = useSelector((state) => state.cart.modalOpen);
   const handleClose = () => dispatch(cartActions.setModalOpenFalse());
   const [isDisabled,setIsDisabled] = useState(true)
+
+  //refs
+  const nameRef = useRef()
+  const lastNameRef = useRef()
+  const adressRef = useRef()
+  const phoneRef = useRef()
+  const emailRef = useRef()
+
+
+const submitHandler = async () => {
+
+  const name = nameRef.current.value ? nameRef.current.value : nameRef.current.placeholder
+  const surname = lastNameRef.current.value ? lastNameRef.current.value : lastNameRef.current.placeholder
+  const adress = adressRef.current.value ? adressRef.current.value : adressRef.current.placeholder
+  const phone = phoneRef.current.value ? phoneRef.current.value : phoneRef.current.placeholder 
+  const email = emailRef.current.value ? emailRef.current.value : emailRef.current.placeholder
+
+
+  const response = await fetch("/api/changeUser",{
+    method:"POST",
+    body:JSON.stringify({
+      name,
+      surname,
+      adress,
+      phone,email
+    })
+  })
+
+  const res = await response.json()
+
+}
+
+
+
+
+
   useEffect(() => {
     const getUser = async () => {
       const response = await fetch("/api/getUser", {
@@ -71,53 +107,62 @@ export default function BasicModal() {
           <div className={styles["text-fields-wrapper"]}>
           <div className={styles["text-field-div"]}>
             <h2>Name:</h2>
-            <TextField
+            <input
+            ref={nameRef}
               id="outlined-basic"
-              label={korisnik?.name}
+              className={styles["input-custom"]}
+              placeholder={korisnik?.name}
               variant="outlined"
               disabled={isDisabled}
             />
           </div>
           <div className={styles["text-field-div"]}>
             <h2>Last Name:</h2>
-            <TextField
+            <input
+           className={styles["input-custom"]}
+            ref={lastNameRef}
               id="outlined-basic"
-              label={korisnik?.surname}
+              placeholder={korisnik?.surname}
               variant="outlined"
               disabled={isDisabled}
             />
           </div>
           <div className={styles["text-field-div"]}>
             <h2>Adress:</h2>
-            <TextField
+            <input
+             className={styles["input-custom"]}
+            ref={adressRef}
               id="outlined-basic"
-              label={korisnik?.adress}
+              placeholder={korisnik?.adress}
               variant="outlined"
               disabled={isDisabled}
             />
           </div>
           <div className={styles["text-field-div"]}>
             <h2>Phone:</h2>
-            <TextField
+            <input className={styles["input-custom"]}
+              ref={phoneRef}
               id="outlined-basic"
-              label={korisnik?.phone}
+              placeholder={korisnik?.phone}
               variant="outlined"
               disabled={isDisabled}
             />
           </div>
           <div className={styles["text-field-div"]}>
             <h2>Email:</h2>
-            <TextField
+            <input
+             className={styles["input-custom"]}
+            ref={emailRef}
               id="outlined-basic"
-              label={korisnik?.email}
+              placeholder={korisnik?.email}
               variant="outlined"
-              disabled={isDisabled}
+              disabled={true}
             />
           </div>
           </div>
           <div className={styles["buttons-div"]}>
-          <button onClick={ () => {setIsDisabled(false) }}>Change</button>
-          <button>Submit</button>
+          <button onClick={ () => {setIsDisabled(!isDisabled) }}>Change</button>
+          <button onClick={submitHandler}>Submit</button>
           </div>
         </Box>
       </Modal>
